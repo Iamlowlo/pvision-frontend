@@ -1,0 +1,26 @@
+@import "variables";
+
+@function px2rem($size, $base: $baseSize) {
+  @return ($size/$base) + 0rem;
+}
+
+@mixin font-body () {
+  font-family: $f-family;
+  font-size: px2rem($f-size-body);
+  line-height: 1;
+  font-weight: $f-weight-regular;
+}
+
+@mixin font-body-highlight () {
+  font-family: $f-family;
+  font-size: px2rem($f-size-body);
+  line-height: 1;
+  font-weight: $f-weight-semibold;
+}
+
+@mixin font-title () {
+  font-family: $f-family;
+  font-size: px2rem($f-size-title);
+  line-height: px2rem($f-lHeight-title);
+  font-weight: $f-weight-regular;
+}

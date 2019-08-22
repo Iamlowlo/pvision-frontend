@@ -1,0 +1,11 @@
+@import "./buttons";
+@import "./fonts";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  @include font-body();
+  background-color: $c-paleGrey-2;
+}

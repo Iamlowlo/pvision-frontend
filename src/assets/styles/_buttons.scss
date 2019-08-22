@@ -1,0 +1,10 @@
+@import "variables";
+@import "mixins";
+
+.btn {
+  background-color: $c-avocado;
+  border: none;
+  color: $c-white;
+  line-height: 1;
+  padding: px2rem(7) px2rem(16) px2rem(9);
+}

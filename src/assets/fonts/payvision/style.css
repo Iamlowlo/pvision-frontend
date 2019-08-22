@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'payvision';
+  src:  url('fonts/payvision.eot?zhue3z');
+  src:  url('fonts/payvision.eot?zhue3z#iefix') format('embedded-opentype'),
+    url('fonts/payvision.ttf?zhue3z') format('truetype'),
+    url('fonts/payvision.woff?zhue3z') format('woff'),
+    url('fonts/payvision.svg?zhue3z#payvision') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'payvision' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-chevron-down:before {
+  content: "\e900";
+}
+.icon-spinner8:before {
+  content: "\e981";
+}
