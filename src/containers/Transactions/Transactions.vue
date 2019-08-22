@@ -1,12 +1,14 @@
 <template>
-  <section class="transactions">
+  <section class="app-wrapper transactions">
     <div class="transactions__header">
       <dropdown
+        :isDesktop="isDesktop"
         defaultMsg="Transaction Type"
         :options="actionFilterOptions"
         @onSelectOption="option => onFilterSelect('action', option)"
       ></dropdown>
       <dropdown
+        :isDesktop="isDesktop"
         defaultMsg="Currency"
         :options="currencyFilterOptions"
         @onSelectOption="option => onFilterSelect('currency', option)"
@@ -17,6 +19,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import dropdown from '@/components/Dropdown/Dropdown.vue';
 export default {
   name: 'Transactions',
@@ -35,6 +38,9 @@ export default {
       { msg: 'Authorize', value: 'authorize' }
     ]
   }),
+  computed: {
+    ...mapState('global', ['isDesktop'])
+  },
   methods: {
     onFilterSelect: function(filterName, option) {
       console.log(filterName, option);
