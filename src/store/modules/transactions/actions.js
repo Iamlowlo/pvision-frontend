@@ -1,8 +1,10 @@
 import { TransactionsService } from '@/services/transactionsService';
 import { mutationNames } from './mutations';
+import { brandNames } from "@/config/statics";
 
 export const actionNames = {
-  GET_TRANSACTIONS: '[TRANSACTIONS]: Request available transactions'
+  GET_TRANSACTIONS: '[TRANSACTIONS]: Request available transactions',
+  GET_CONFIG: '[TRANSACTIONS]: Request transactions config'
 };
 
 const getQueryParams = obj => {
@@ -30,6 +32,14 @@ const uniqueFilterMap = (acc, value, filterName) => {
 };
 
 export default {
+  [actionNames.GET_CONFIG]: ({ commit }) => {
+    return new Promise(resolve => {
+      commit(mutationNames.SET_CONFIG, {
+        brandNames: brandNames
+      });
+      resolve();
+    });
+  },
   [actionNames.GET_TRANSACTIONS]: ({ state, commit }) => {
     return new Promise((resolve, reject) => {
       TransactionsService.getTransactions(getQueryParams(state.filters))
@@ -56,6 +66,7 @@ export default {
             }
           );
           commit(mutationNames.SET_AVAILABLE_FILTERS, availableFilters);
+          commit(mutationNames.SET_TRANSACTIONS, resp);
           console.log('OK', resp);
           resolve(resp);
         })
