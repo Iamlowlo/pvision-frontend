@@ -7,7 +7,7 @@
       @click.stop="toggleDropdown"
     >
       <span class="dropdown__desktop__selected-option">{{
-        selectedOptionMsg
+        selectedOption.msg
       }}</span>
       <ul v-if="isOpen" class="dropdown__desktop__option-list">
         <li
@@ -24,6 +24,7 @@
       v-else
       name="dropdown"
       class="dropdown__mobile"
+      :value="selectedOption.value"
       @change="$event => onSelectOption($event.target.value)"
     >
       <option value="" disabled selected>{{ defaultMsg }}</option>
@@ -35,7 +36,7 @@
       >
     </select>
     <i class="icon-chevron-down dropdown__arrow"
-       :class="[isOpen ? 'dropdown__arrow--open' : '']"
+       :class="[isOpen && isDesktop ? 'dropdown__arrow--open' : '']"
        @click.stop="toggleDropdown"></i>
   </div>
 </template>
@@ -44,7 +45,7 @@
 export default {
   name: 'Dropdown',
   data: () => ({
-    selectedOptionMsg: '',
+    selectedOption: {},
     isOpen: false
   }),
   props: {
@@ -67,11 +68,10 @@ export default {
   },
   methods: {
     onSelectOption: function(optionValue) {
-      const selectedOption = this.options.find(
+      this.selectedOption = this.options.find(
         option => option.value === optionValue
       );
-      this.selectedOptionMsg = selectedOption.msg;
-      this.$emit('onSelectOption', selectedOption);
+      this.$emit('onSelectOption', this.selectedOption);
     },
     clickAway: function() {
       this.isOpen = false;
@@ -86,7 +86,9 @@ export default {
     }
   },
   mounted() {
-    this.selectedOptionMsg = this.defaultMsg;
+    this.selectedOption = this.defaultMsg
+      ? { msg: this.defaultMsg }
+      : this.options[0];
   }
 };
 </script>

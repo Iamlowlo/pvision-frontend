@@ -38,6 +38,8 @@
 
     &__option-list {
       border: 1px solid $c-topaz;
+      border-bottom-left-radius: $borderRadius;
+      border-bottom-right-radius: $borderRadius;
       border-top: none;
       list-style: none;
       left: -1px;
