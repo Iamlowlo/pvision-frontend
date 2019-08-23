@@ -11,15 +11,17 @@
         :isDesktop="isDesktop"
         defaultMsg="Currency"
         :options="currencyFilterOptions"
-        @onSelectOption="option => onFilterSelect('currency', option)"
+        @onSelectOption="option => onFilterSelect('currencyCode', option)"
       ></dropdown>
-      <button class="btn">Search</button>
+      <button class="btn" @click="onGetTransactions">Search</button>
     </div>
   </section>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+  import {mapState, mapMutations, mapActions } from 'vuex';
+import { mutationNames as transactionsMutationNames } from '@/store/modules/transactions/mutations';
+import { actionNames as transactionsActionsNames } from '@/store/modules/transactions/actions';
 import dropdown from '@/components/Dropdown/Dropdown.vue';
 export default {
   name: 'Transactions',
@@ -42,8 +44,13 @@ export default {
     ...mapState('global', ['isDesktop'])
   },
   methods: {
+    ...mapMutations('transactions', [transactionsMutationNames.SET_FILTER]),
+    ...mapActions('transactions', [transactionsActionsNames.GET_TRANSACTIONS]),
     onFilterSelect: function(filterName, option) {
-      console.log(filterName, option);
+      this[transactionsMutationNames.SET_FILTER]({[filterName]: option.value})
+    },
+    onGetTransactions: function(){
+      this[transactionsActionsNames.GET_TRANSACTIONS]().then().catch();
     }
   }
 };

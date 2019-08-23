@@ -1,4 +1,4 @@
-const mutationNames = {
+export const mutationNames = {
   SET_TRANSACTIONS: '[TRANSACTIONS]: Set available transactions',
   SET_FILTER: '[TRANSACTIONS]: Set transactions filter'
 };
