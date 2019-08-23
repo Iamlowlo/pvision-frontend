@@ -1,0 +1,16 @@
+{
+  "name": "middleware",
+  "version": "1.0.0",
+  "description": "Middleware created with express to bypass CORS restriction on API",
+  "main": "index.js",
+  "scripts": {
+    "middle": "node index.js"
+  },
+  "author": "Carlos Lopez",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "request": "^2.88.0"
+  }
+}
