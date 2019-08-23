@@ -8,12 +8,6 @@
     color: $c-cobalt;
     border-color: $c-cobalt;
     padding: px2rem(7) px2rem(32) px2rem(9) px2rem(16);
-
-    option {
-      &:first-child {
-        display: none;
-      }
-    }
   }
 
   &__desktop {

@@ -2,8 +2,10 @@
   <div class="dropdown">
     <div
       v-if="isDesktop"
+      ref="dropdown__desktop"
       class="dropdown__desktop"
       :class="[isOpen ? 'dropdown__desktop--open' : '']"
+      :style="[{ minWidth: initialWidth }]"
       @click.stop="toggleDropdown"
     >
       <span class="dropdown__desktop__selected-option">{{
@@ -13,7 +15,7 @@
         <li
           class="dropdown__desktop__option"
           v-for="(option, key) of options"
-          :key="`dropdown-option-${key}`"
+          :key="`dropdown-option-${key}-${option.value}`"
           @click="() => onSelectOption(option.value)"
         >
           {{ option.msg }}
@@ -27,17 +29,20 @@
       :value="selectedOption.value"
       @change="$event => onSelectOption($event.target.value)"
     >
-      <option value="" disabled selected>{{ defaultMsg }}</option>
-      <option
-        v-for="(option, key) of options"
-        :value="option.value"
-        :key="`dropdown-option-${key}`"
+      <template v-for="(option, key) of options">
+        <option
+          :value="option.value"
+          :key="`dropdown-option-${key}`"
+          :selected="key === 0"
         >{{ option.msg }}</option
-      >
+        >
+      </template>
     </select>
-    <i class="icon-chevron-down dropdown__arrow"
-       :class="[isOpen && isDesktop ? 'dropdown__arrow--open' : '']"
-       @click.stop="toggleDropdown"></i>
+    <i
+      class="icon-chevron-down dropdown__arrow"
+      :class="[isOpen && isDesktop ? 'dropdown__arrow--open' : '']"
+      @click.stop="toggleDropdown"
+    ></i>
   </div>
 </template>
 
@@ -46,7 +51,8 @@ export default {
   name: 'Dropdown',
   data: () => ({
     selectedOption: {},
-    isOpen: false
+    isOpen: false,
+    isMounted: false
   }),
   props: {
     isDesktop: {
@@ -55,15 +61,19 @@ export default {
     },
     defaultMsg: {
       type: String,
-      default: 'Transaction Type'
+      default: ''
     },
     options: {
       type: Array,
-      default: () => [
-        { msg: 'Payment', value: 'payment' },
-        { msg: 'Credit', value: 'credit' },
-        { msg: 'Authorize', value: 'authorize' }
-      ]
+      default: () => []
+    }
+  },
+  computed: {
+    initialWidth: function() {
+      // not working as expected
+      return this.options.length && this.isMounted
+        ? `${this.$refs['dropdown__desktop'].offsetWidth}px`
+        : '100px';
     }
   },
   methods: {
@@ -75,13 +85,13 @@ export default {
     },
     clickAway: function() {
       this.isOpen = false;
-      window.removeEventListener('click', this.clickAway)
+      window.removeEventListener('click', this.clickAway);
     },
     toggleDropdown: function() {
-      document.body.click();
       this.isOpen = !this.isOpen;
+      document.body.click();
       if (this.isOpen) {
-        window.addEventListener('click', this.clickAway)
+        window.addEventListener('click', this.clickAway);
       }
     }
   },
@@ -89,6 +99,7 @@ export default {
     this.selectedOption = this.defaultMsg
       ? { msg: this.defaultMsg }
       : this.options[0];
+    this.isMounted = true;
   }
 };
 </script>

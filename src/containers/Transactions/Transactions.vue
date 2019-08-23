@@ -2,16 +2,11 @@
   <section class="app-wrapper transactions">
     <div class="transactions__header">
       <dropdown
+        v-for="(filterOptions, filterName) in availableFilters"
         :isDesktop="isDesktop"
-        defaultMsg="Transaction Type"
-        :options="actionFilterOptions"
-        @onSelectOption="option => onFilterSelect('action', option)"
-      ></dropdown>
-      <dropdown
-        :isDesktop="isDesktop"
-        defaultMsg="Currency"
-        :options="currencyFilterOptions"
-        @onSelectOption="option => onFilterSelect('currencyCode', option)"
+        :options="filterOptions"
+        :key="`dropdown-filter-${filterName}`"
+        @onSelectOption="option => onFilterSelect(filterName, option)"
       ></dropdown>
       <button class="btn" @click="onGetTransactions">Search</button>
     </div>
@@ -19,7 +14,7 @@
 </template>
 
 <script>
-  import {mapState, mapMutations, mapActions } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import { mutationNames as transactionsMutationNames } from '@/store/modules/transactions/mutations';
 import { actionNames as transactionsActionsNames } from '@/store/modules/transactions/actions';
 import dropdown from '@/components/Dropdown/Dropdown.vue';
@@ -41,17 +36,29 @@ export default {
     ]
   }),
   computed: {
-    ...mapState('global', ['isDesktop'])
+    ...mapState('global', ['isDesktop']),
+    ...mapState('transactions', ['availableFilters'])
   },
   methods: {
-    ...mapMutations('transactions', [transactionsMutationNames.SET_FILTER]),
+    ...mapMutations('transactions', [
+      transactionsMutationNames.SET_ACTIVE_FILTER
+    ]),
     ...mapActions('transactions', [transactionsActionsNames.GET_TRANSACTIONS]),
     onFilterSelect: function(filterName, option) {
-      this[transactionsMutationNames.SET_FILTER]({[filterName]: option.value})
+      this[transactionsMutationNames.SET_ACTIVE_FILTER]({
+        [filterName]: option.value
+      });
     },
-    onGetTransactions: function(){
-      this[transactionsActionsNames.GET_TRANSACTIONS]().then().catch();
+    onGetTransactions: function() {
+      this[transactionsActionsNames.GET_TRANSACTIONS]()
+        .then()
+        .catch();
     }
+  },
+  mounted() {
+    this[transactionsActionsNames.GET_TRANSACTIONS]()
+      .then()
+      .catch();
   }
 };
 </script>
