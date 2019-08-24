@@ -8,9 +8,18 @@
         :key="`dropdown-filter-${filterName}`"
         @onSelectOption="option => onFilterSelect(filterName, option)"
       ></dropdown>
-      <button class="btn" @click="onGetTransactions">Search</button>
+      <button class="btn" @click="onGetTransactions">
+        <i v-if="isLoading" class="icon-spinner8"></i>
+        <template v-else>Search</template>
+      </button>
     </div>
-    <responsiveTable :info="tableInfo"></responsiveTable>
+    <div class="transactions__content">
+      <responsiveTable v-if="tableInfo.length" :info="tableInfo"></responsiveTable>
+      <div v-else class="transactions__content__empty-msg">There are no transactions to show.</div>
+      <div v-if="isLoading" class="transactions__content__overlay">
+        <i class="icon-spinner8 transactions__content__overlay__icon"></i>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -28,8 +37,7 @@ export default {
     responsiveTable
   },
   data: () => ({
-    thList: [],
-    trList: []
+    isLoading: false
   }),
   computed: {
     ...mapState('global', ['isDesktop']),
@@ -70,15 +78,21 @@ export default {
       });
     },
     onGetTransactions: function() {
+      this.isLoading = true;
       this[transactionsActionsNames.GET_TRANSACTIONS]()
-        .then()
+        .then(() => {
+          this.isLoading = false;
+        })
         .catch();
     }
   },
   mounted() {
     this[transactionsActionsNames.GET_CONFIG]().then(() => {
+      this.isLoading = true;
       this[transactionsActionsNames.GET_TRANSACTIONS]()
-        .then()
+        .then(() => {
+          this.isLoading = false;
+        })
         .catch();
     });
   }

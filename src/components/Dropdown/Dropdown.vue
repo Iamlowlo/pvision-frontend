@@ -2,7 +2,6 @@
   <div class="dropdown">
     <div
       v-if="isDesktop"
-      ref="dropdown__desktop"
       class="dropdown__desktop"
       :class="[isOpen ? 'dropdown__desktop--open' : '']"
       @click.stop="toggleDropdown"
@@ -23,6 +22,7 @@
     </div>
     <select
       v-else
+      ref="dropdown__mobile"
       name="dropdown"
       class="dropdown__mobile"
       :value="selectedOption.value"
@@ -81,6 +81,11 @@ export default {
     toggleDropdown: function() {
       this.isOpen = !this.isOpen;
       document.body.click();
+      const dropdownMobileRef = this.$refs['dropdown__mobile'];
+      if (dropdownMobileRef) {
+        console.log('dropdownMobileRef', dropdownMobileRef)
+        dropdownMobileRef.click();
+      }
       if (this.isOpen) {
         window.addEventListener('click', this.clickAway);
       }

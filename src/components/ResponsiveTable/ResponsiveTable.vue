@@ -17,10 +17,12 @@
           :key="`td-${trKey}-${tdKey}`"
           class="responsive-table__cell">{{td}}</td>
       </tr>
-      <tr v-if="openedTrId === tr.id" class="responsive-table__extra">
+      <tr v-if="openedTrId === tr.id"
+          :key="`extra-tr-${trKey}`"
+          class="responsive-table__extra">
         <td class="" :colspan="thList.length">
           <dl
-            :key="`extra-tr-${trKey}`"
+            :key="`extra-dl-${trKey}`"
             class="responsive-table__extra__row">
             <template v-for="(extraDd, extraDt, index) in tr.extra">
               <dt
@@ -39,11 +41,11 @@
 
 <script>
 export default {
-  name: "ResponsiveTable",
+  name: 'ResponsiveTable',
   data: () => {
     return {
       openedTrId: ''
-    }
+    };
   },
   props: {
     isDesktop: {
@@ -57,19 +59,15 @@ export default {
   },
   computed: {
     thList: function() {
-      return this.info.length
-      ? Object.keys(this.info[0].main)
-      : []
+      return this.info.length ? Object.keys(this.info[0].main) : []
     }
   },
   methods: {
     setOpenedRow: function(trId) {
-      this.openedTrId = this.openedTrId === trId
-        ? ''
-        : trId;
+      this.openedTrId = this.openedTrId === trId ? '' : trId;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped src="./ResponsiveTable.scss"></style>

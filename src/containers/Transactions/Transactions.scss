@@ -14,4 +14,43 @@
       }
     }
   }
+
+  &__content {
+    position: relative;
+
+    &__empty-msg {
+      @include font-body-highlight;
+      align-items: center;
+      background-color: $c-white;
+      color: $c-cobalt;
+      display: flex;
+      font-size: px2rem(18);
+      justify-content: center;
+      height: px2rem(200);
+      max-height: 40vh;
+    }
+
+    &__overlay {
+      background-color: rgba($c-lightGreyBlue, 0.5);
+      bottom: 0;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+
+      &__icon {
+        bottom: 0;
+        color: $c-paleGrey;
+        display: block;
+        font-size: px2rem(32);
+        height: px2rem(32);
+        position: absolute;
+        left: 0;
+        margin: auto;
+        top: 0;
+        right: 0;
+        width: px2rem(32);
+      }
+    }
+  }
 }
