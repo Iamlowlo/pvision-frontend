@@ -1,0 +1,19 @@
+.locale-selector {
+  list-style: none;
+  display: flex;
+
+  &__element {
+    height: 16px;
+    margin: 0 px2rem(5);
+    width: 24px;
+
+    > img {
+      height: 100%;
+      width: 100%;
+    }
+
+    &--active {
+      border: 1px solid $c-topaz;
+    }
+  }
+}

@@ -22,20 +22,17 @@
     </div>
     <select
       v-else
-      ref="dropdown__mobile"
       name="dropdown"
       class="dropdown__mobile"
       :value="selectedOption.value"
       @change="$event => onSelectOption($event.target.value)"
     >
-      <template v-for="(option, key) of options">
-        <option
-          :value="option.value"
-          :key="`dropdown-option-${key}`"
-          :selected="key === 0"
-        >{{ option.msg }}</option
-        >
-      </template>
+      <option
+        v-for="(option, key) of options"
+        :value="option.value"
+        :key="`dropdown-option-${key}`"
+        :selected="key === 0"
+      >{{ option.msg }}</option>
     </select>
     <i
       class="icon-chevron-down dropdown__arrow"
@@ -81,11 +78,6 @@ export default {
     toggleDropdown: function() {
       this.isOpen = !this.isOpen;
       document.body.click();
-      const dropdownMobileRef = this.$refs['dropdown__mobile'];
-      if (dropdownMobileRef) {
-        console.log('dropdownMobileRef', dropdownMobileRef)
-        dropdownMobileRef.click();
-      }
       if (this.isOpen) {
         window.addEventListener('click', this.clickAway);
       }

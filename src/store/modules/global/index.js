@@ -1,7 +1,8 @@
 import mutations from './mutations';
 
 export const initialState = () => ({
-  isDesktop: false
+  isDesktop: false,
+  locale: 'en'
 });
 
 export default {

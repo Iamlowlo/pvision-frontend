@@ -1,6 +1,7 @@
 <template>
   <section class="app-wrapper transactions">
     <div class="transactions__header">
+      <localeSelector></localeSelector>
       <dropdown
         v-for="(filterOptions, filterName) in availableFilters"
         :isDesktop="isDesktop"
@@ -10,12 +11,12 @@
       ></dropdown>
       <button class="btn" @click="onGetTransactions">
         <i v-if="isLoading" class="icon-spinner8"></i>
-        <template v-else>Search</template>
+        <template v-else>{{ $t('messages.TRANSACTIONS_SEARCH') }}</template>
       </button>
     </div>
     <div class="transactions__content">
       <responsiveTable v-if="tableInfo.length" :info="tableInfo"></responsiveTable>
-      <div v-else class="transactions__content__empty-msg">There are no transactions to show.</div>
+      <div v-else class="transactions__content__empty-msg">{{ $t('messages.TRANSACTIONS_EMPTY_RESULTS') }}</div>
       <div v-if="isLoading" class="transactions__content__overlay">
         <i class="icon-spinner8 transactions__content__overlay__icon"></i>
       </div>
@@ -28,11 +29,14 @@ import get from 'lodash/get';
 import { mapState, mapMutations, mapActions } from 'vuex';
 import { mutationNames as transactionsMutationNames } from '@/store/modules/transactions/mutations';
 import { actionNames as transactionsActionsNames } from '@/store/modules/transactions/actions';
+import localeSelector from '@/containers/LocaleSelector/LocaleSelector.vue';
 import dropdown from '@/components/Dropdown/Dropdown.vue';
 import responsiveTable from '@/components/ResponsiveTable/ResponsiveTable.vue';
+
 export default {
   name: 'Transactions',
   components: {
+    localeSelector,
     dropdown,
     responsiveTable
   },
@@ -46,20 +50,20 @@ export default {
       return this.list.map(transaction => ({
         id: get(transaction, 'id', ''),
         main: {
-          ['Name']: get(transaction, 'card.holderName', ''),
-          ['Brand']: this.config.brandNames[get(transaction, 'brandId', '')],
-          ['Last 4 digits']: `XXXX ${get(transaction, 'card.lastFourDigits', '')}`,
-          ['Transaction type']: get(transaction, 'action', ''),
-          ['Amount']: get(transaction, 'amount', 0),
-          ['Currency']: get(transaction, 'currencyCode', '')
+          [this.$t('messages.TRANSACTIONS_NAME')]: get(transaction, 'card.holderName', ''),
+          [this.$t('messages.TRANSACTIONS_BRAND')]: this.config.brandNames[get(transaction, 'brandId', '')],
+          [this.$t('messages.TRANSACTIONS_LAST_4_DIGITS')]: `XXXX ${get(transaction, 'card.lastFourDigits', '')}`,
+          [this.$t('messages.TRANSACTIONS_TYPE')]: this.$t(`messages.APP_action_${get(transaction, 'action', 'none')}`),
+          [this.$t('messages.TRANSACTIONS_AMOUNT')]: get(transaction, 'amount', 0),
+          [this.$t('messages.TRANSACTIONS_CURRENCY')]: get(transaction, 'currencyCode', '')
         },
         extra: {
-          ['ID']: get(transaction, 'id', ''),
-          ['Tracking code']: get(transaction, 'trackingCode', ''),
-          ['Brand ID']: get(transaction, 'brandId', ''),
-          ['First 6 digits']: `${get(transaction, 'card.firstSixDigits', '')} XXXX`,
-          ['Expiry month']: get(transaction, 'card.expiryMonth', '00'),
-          ['Expiry year']: get(transaction, 'card.expiryYear', '2000')
+          [this.$t('messages.TRANSACTIONS_ID')]: get(transaction, 'id', ''),
+          [this.$t('messages.TRANSACTIONS_TRACKING_CODE')]: get(transaction, 'trackingCode', ''),
+          [this.$t('messages.TRANSACTIONS_BRAND_ID')]: get(transaction, 'brandId', ''),
+          [this.$t('messages.TRANSACTIONS_FIRST_6_DIGITS')]: `${get(transaction, 'card.firstSixDigits', '')} XXXX`,
+          [this.$t('messages.TRANSACTIONS_EXPIRY_MONTH')]: get(transaction, 'card.expiryMonth', '00'),
+          [this.$t('messages.TRANSACTIONS_EXPIRY_YEAR')]: get(transaction, 'card.expiryYear', '2000')
         }
       }));
     }
