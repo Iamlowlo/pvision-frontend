@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
-import { mutationNames as globalMutationNames } from '@/store/modules/global/mutations';
+import { mapState, mapActions } from 'vuex';
+import { actionNames as globalActionNames } from '@/store/modules/global/actions';
 
 export default {
   name: 'LocaleSelector',
@@ -28,9 +28,9 @@ export default {
     ...mapState('global', ['locale'])
   },
   methods: {
-    ...mapMutations('global', [globalMutationNames.SET_LOCALE]),
+    ...mapActions('global', [globalActionNames.SET_LOCALE_AND_UPDATE]),
     setLocale: function(locale) {
-      this[globalMutationNames.SET_LOCALE](locale);
+      this[globalActionNames.SET_LOCALE_AND_UPDATE](locale);
     }
   }
 };

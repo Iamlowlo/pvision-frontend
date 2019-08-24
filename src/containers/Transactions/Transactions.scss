@@ -2,16 +2,24 @@
   &__header {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: flex-end;
     padding: px2rem(16) 0;
 
     > * {
+      width: 100%;
+
       &:not(:last-child) {
-        margin-right: px2rem(8);
+        margin-bottom: px2rem(12);
       }
-      &:not(:first-child) {
-        margin-left: px2rem(8);
-      }
+    }
+
+    /deep/ .dropdown__mobile {
+      width: 100%;
+    }
+
+    &__locale-selector {
+      margin-right: auto !important;
     }
   }
 
@@ -50,6 +58,21 @@
         top: 0;
         right: 0;
         width: px2rem(32);
+      }
+    }
+  }
+
+  @media (min-width: px2rem($bp-tablet)) {
+    &__header {
+      > * {
+        width: initial;
+        &:not(:last-child) {
+          margin-bottom: 0;
+          margin-right: px2rem(8);
+        }
+        &:not(:first-child) {
+          margin-left: px2rem(8);
+        }
       }
     }
   }

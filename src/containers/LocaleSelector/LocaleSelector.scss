@@ -1,10 +1,14 @@
 .locale-selector {
-  list-style: none;
   display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 
   &__element {
+    cursor: pointer;
     height: 16px;
     margin: 0 px2rem(5);
+    opacity: 0.5;
     width: 24px;
 
     > img {
@@ -13,7 +17,7 @@
     }
 
     &--active {
-      border: 1px solid $c-topaz;
+      opacity: 1;
     }
   }
 }

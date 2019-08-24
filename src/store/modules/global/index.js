@@ -1,3 +1,4 @@
+import actions from './actions';
 import mutations from './mutations';
 
 export const initialState = () => ({
@@ -8,5 +9,6 @@ export const initialState = () => ({
 export default {
   namespaced: true,
   state: initialState(),
-  mutations
+  mutations,
+  actions
 };

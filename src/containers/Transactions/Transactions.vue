@@ -1,7 +1,7 @@
 <template>
   <section class="app-wrapper transactions">
     <div class="transactions__header">
-      <localeSelector></localeSelector>
+      <localeSelector class="transactions__header__locale-selector"></localeSelector>
       <dropdown
         v-for="(filterOptions, filterName) in availableFilters"
         :isDesktop="isDesktop"
