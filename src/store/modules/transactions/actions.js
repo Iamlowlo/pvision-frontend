@@ -67,7 +67,6 @@ export default {
           );
           commit(mutationNames.SET_AVAILABLE_FILTERS, availableFilters);
           commit(mutationNames.SET_TRANSACTIONS, resp);
-          console.log('OK', resp);
           resolve(resp);
         })
         .catch(err => {

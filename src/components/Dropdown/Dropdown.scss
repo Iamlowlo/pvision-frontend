@@ -5,6 +5,7 @@
     @include font-body-highlight();
     appearance: none;
     background-color: $c-white;
+    border-radius: $borderRadius;
     color: $c-cobalt;
     border-color: $c-cobalt;
     padding: px2rem(7) px2rem(32) px2rem(9) px2rem(16);
@@ -15,6 +16,7 @@
     border: 1px solid $c-cobalt;
     border-radius: $borderRadius;
     cursor: pointer;
+    min-width: px2rem(150);
     position: relative;
 
     &--open {

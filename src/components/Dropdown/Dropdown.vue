@@ -5,7 +5,6 @@
       ref="dropdown__desktop"
       class="dropdown__desktop"
       :class="[isOpen ? 'dropdown__desktop--open' : '']"
-      :style="[{ minWidth: initialWidth }]"
       @click.stop="toggleDropdown"
     >
       <span class="dropdown__desktop__selected-option">{{
@@ -66,14 +65,6 @@ export default {
     options: {
       type: Array,
       default: () => []
-    }
-  },
-  computed: {
-    initialWidth: function() {
-      // not working as expected
-      return this.options.length && this.isMounted
-        ? `${this.$refs['dropdown__desktop'].offsetWidth}px`
-        : '100px';
     }
   },
   methods: {

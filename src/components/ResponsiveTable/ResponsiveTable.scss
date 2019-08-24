@@ -2,14 +2,13 @@
   $responsivetable: &;
 
   background-color: $c-white;
-  display: flex;
-  list-style: none;
   margin: 0;
   overflow-x: auto;
   padding: 0 px2rem(12);
   width: 100%;
 
   &__row {
+    cursor: pointer;
     flex-shrink: 0;
     padding-right: px2rem(16);
     width: px2rem(150);
@@ -31,17 +30,7 @@
 
   &__cell {
     @include font-body();
-    display: block;
     padding: px2rem(20) 0;
-
-    // media desktop
-    //&:not(:first-child) {
-    //  padding-left: px2rem(7);
-    //}
-    //
-    //&:not(:last-child) {
-    //  padding-right: px2rem(7);
-    //}
 
     &--head {
       @include font-body-highlight();
@@ -50,8 +39,9 @@
   }
 
   &__extra {
+    background-color: $c-paleGrey;
+
     &__row {
-      background-color: $c-paleGrey;
       border-left: 1px solid $c-paleGrey-2;
       display: flex;
       flex-wrap: wrap;
@@ -63,6 +53,7 @@
     &__term {
       @include font-title();
       color: $c-cobalt;
+      padding-right: px2rem(8);
       width: 20%;
     }
 
@@ -73,25 +64,66 @@
     }
   }
 
-  @media (min-width: px2rem($bp-desktop)) {
-    display: table;
+  @media (max-width: px2rem($bp-desktop)) {
+    display: flex;
+
+    &__cell {
+      display: block;
+    }
+
+    &__extra {
+      display: flex;
+      &__row {
+        display: flex;
+        flex-wrap: wrap;
+        height: 100%;
+      }
+    }
+  }
+
+  @media (min-width: px2rem($bp-desktop + 1)) {
+    position: relative;
+    padding: 0;
 
     &__row {
-      display: table-row;
       padding: 0;
 
       &:not(:first-child) {
         border-left: none;
-        #{$responsivetable}__cell {
-          border-top: 1px solid $c-paleGrey-2;
+
+        &:after {
+          background-color: $c-paleGrey-2;
+          content: '';
+          display: block;
+          height: 1px;
+          left:px2rem(16);
+          position: absolute;
+          right:px2rem(16);
         }
       }
     }
 
     &__cell {
-      display: table-cell;
       padding-left: px2rem(16);
       padding-right: px2rem(16);
+    }
+
+    &__extra {
+      &__row {
+        border-left: none;
+        border-top: 1px solid $c-paleGrey-2;
+        display: grid;
+        grid-template: 1fr / 15% 35% 15% 35%;
+        margin: 0 px2rem(16);
+        padding-left: px2rem(64);
+        padding-right: px2rem(64);
+      }
+
+      &__term,
+      &__definition {
+        padding: px2rem(16) px2rem(4);
+        width: 100%;
+      }
     }
   }
 }
