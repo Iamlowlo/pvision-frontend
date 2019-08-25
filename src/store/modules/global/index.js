@@ -2,6 +2,7 @@ import actions from './actions';
 import mutations from './mutations';
 
 export const initialState = () => ({
+  isTablet: false,
   isDesktop: false,
   locale: 'en'
 });

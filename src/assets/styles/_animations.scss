@@ -18,3 +18,7 @@
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
+
+.slideDown-enter-active, .slideDown-leave-active {
+  transition: height 0.2s;
+}

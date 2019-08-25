@@ -48,10 +48,6 @@ export default {
     };
   },
   props: {
-    isDesktop: {
-      type: Boolean,
-      default: false
-    },
     info: {
       type: Array,
       default: () => []

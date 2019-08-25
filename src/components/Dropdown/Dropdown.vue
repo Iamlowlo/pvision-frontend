@@ -9,18 +9,23 @@
       <span class="dropdown__desktop__selected-option" ref="dropdown__desktop__selected-option">{{
         selectedOption.msg
       }}</span>
-      <ul v-if="isOpen"
-          ref="dropdown__desktop__option-list"
-          class="dropdown__desktop__option-list">
-        <li
-          class="dropdown__desktop__option"
-          v-for="(option, key) of options"
-          :key="`dropdown-option-${key}-${option.value}`"
-          @click="() => onSelectOption(option.value)"
-        >
-          {{ option.msg }}
-        </li>
-      </ul>
+      <transition name="slideDown" @enter="transitionEnter" @leave="transitionLeave">
+        <div
+          v-if="isOpen"
+          ref="dropdown__desktop__option-container"
+          class="dropdown__desktop__option-container">
+          <ul class="dropdown__desktop__option-list">
+            <li
+              class="dropdown__desktop__option"
+              v-for="(option, key) of options"
+              :key="`dropdown-option-${key}-${option.value}`"
+              @click="() => onSelectOption(option.value)"
+            >
+              {{ option.msg }}
+            </li>
+          </ul>
+        </div>
+      </transition>
     </div>
     <select
       v-else
@@ -45,6 +50,8 @@
 </template>
 
 <script>
+import { transitionEnter, transitionLeave } from "@/animations/slideDown";
+
 export default {
   name: 'Dropdown',
   data: () => ({
@@ -67,6 +74,8 @@ export default {
     }
   },
   methods: {
+    transitionEnter,
+    transitionLeave,
     onSelectOption: function(optionValue) {
       this.selectedOption = this.options.find(
         option => option.value === optionValue
@@ -81,11 +90,11 @@ export default {
       this.isOpen = !this.isOpen;
       document.body.click();
       if (this.isOpen) {
-        console.log('dropdown__desktop__selected-option', this.$refs['dropdown__desktop__selected-option'])
-        this.$nextTick(function() {
-          this.$refs['dropdown__desktop__option-list'].style.paddingTop = `${this.$refs['dropdown__desktop__selected-option'].offsetHeight}px`;
-        })
         window.addEventListener('click', this.clickAway);
+        this.$nextTick(function() {
+          const optionContainer = this.$refs['dropdown__desktop__option-container'];
+          optionContainer.style.paddingTop = `${this.$refs['dropdown__desktop__selected-option'].offsetHeight}px`;
+        })
       }
     }
   },

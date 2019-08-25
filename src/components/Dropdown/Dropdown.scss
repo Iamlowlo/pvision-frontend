@@ -33,18 +33,24 @@
       position: relative;
     }
 
-    &__option-list {
+    &__option-container {
       border: 1px solid $c-topaz;
       border-radius: $borderRadius;
+      box-sizing: content-box;
       box-shadow: 0 0 4px $c-lightGreyBlue;
-      list-style: none;
+      height: 0;
       left: -1px;
-      margin: 0;
-      padding: 0;
+      overflow: hidden;
       position: absolute;
       right: -1px;
       top: -1px;
       z-index: 1;
+    }
+
+    &__option-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
     }
 
     &__option {
@@ -68,9 +74,10 @@
     position: absolute;
     right: px2rem(8);
     top: px2rem(9);
+    transition: transform 0.2s;
 
     &--open {
-      transform: rotateX(180deg);
+      transform: rotateZ(-180deg);
     }
   }
 }
