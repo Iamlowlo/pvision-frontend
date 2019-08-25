@@ -2,6 +2,8 @@
 @import "mixins";
 
 .btn {
+  $btn: &;
+
   background-color: $c-avocado;
   border: none;
   border-radius: $borderRadius;
@@ -9,4 +11,19 @@
   line-height: 1;
   min-width: px2rem(100);
   padding: px2rem(7) px2rem(16) px2rem(9);
+
+  &__container {
+    display: block;
+    width: 100%;
+  }
+
+  &--loader {
+
+    #{$btn}__container {
+      position: relative;
+    }
+    .fade-enter-active {
+      width: 100%;
+    }
+  }
 }

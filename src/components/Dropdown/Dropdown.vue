@@ -6,10 +6,12 @@
       :class="[isOpen ? 'dropdown__desktop--open' : '']"
       @click.stop="toggleDropdown"
     >
-      <span class="dropdown__desktop__selected-option">{{
+      <span class="dropdown__desktop__selected-option" ref="dropdown__desktop__selected-option">{{
         selectedOption.msg
       }}</span>
-      <ul v-if="isOpen" class="dropdown__desktop__option-list">
+      <ul v-if="isOpen"
+          ref="dropdown__desktop__option-list"
+          class="dropdown__desktop__option-list">
         <li
           class="dropdown__desktop__option"
           v-for="(option, key) of options"
@@ -79,6 +81,10 @@ export default {
       this.isOpen = !this.isOpen;
       document.body.click();
       if (this.isOpen) {
+        console.log('dropdown__desktop__selected-option', this.$refs['dropdown__desktop__selected-option'])
+        this.$nextTick(function() {
+          this.$refs['dropdown__desktop__option-list'].style.paddingTop = `${this.$refs['dropdown__desktop__selected-option'].offsetHeight}px`;
+        })
         window.addEventListener('click', this.clickAway);
       }
     }

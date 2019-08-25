@@ -1,12 +1,3 @@
-@keyframes spinner {
-  0% {
-    transform: rotateZ(0);
-  }
-  100% {
-    transform: rotateZ(360deg);
-  }
-}
-
 .app-wrapper {
   margin: 0 auto;
   max-width: px2rem(1200);

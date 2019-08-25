@@ -9,17 +9,27 @@
         :key="`dropdown-filter-${filterName}`"
         @onSelectOption="option => onFilterSelect(filterName, option)"
       ></dropdown>
-      <button class="btn" @click="onGetTransactions">
-        <i v-if="isLoading" class="icon-spinner8"></i>
-        <template v-else>{{ $t('messages.TRANSACTIONS_SEARCH') }}</template>
+      <button class="btn btn--loader" @click="onGetTransactions">
+        <span class="btn__container">
+          <transition name="fade" @enter="transitionEnter">
+            <i v-if="isLoading" class="icon-spinner8"></i>
+            <template v-else><span>{{ $t('messages.TRANSACTIONS_SEARCH') }}</span></template>
+          </transition>
+        </span>
       </button>
     </div>
     <div class="transactions__content">
-      <responsiveTable v-if="tableInfo.length" :info="tableInfo"></responsiveTable>
-      <div v-else class="transactions__content__empty-msg">{{ $t('messages.TRANSACTIONS_EMPTY_RESULTS') }}</div>
-      <div v-if="isLoading" class="transactions__content__overlay">
-        <i class="icon-spinner8 transactions__content__overlay__icon"></i>
-      </div>
+      <transition name="fade">
+        <responsiveTable
+          v-if="tableInfo.length"
+          :info="tableInfo"></responsiveTable>
+        <div v-else class="transactions__content__empty-msg">{{ $t('messages.TRANSACTIONS_EMPTY_RESULTS') }}</div>
+      </transition>
+      <transition name="fade">
+        <div v-if="isLoading" class="transactions__content__overlay">
+          <i class="icon-spinner8 transactions__content__overlay__icon"></i>
+        </div>
+      </transition>
     </div>
   </section>
 </template>
@@ -88,6 +98,11 @@ export default {
           this.isLoading = false;
         })
         .catch();
+    },
+    transitionEnter: function (el) {
+      if (el.parentElement) {
+        el.parentElement.style.minHeight = `${el.parentElement.offsetHeight}px`;
+      }
     }
   },
   mounted() {

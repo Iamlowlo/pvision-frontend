@@ -20,8 +20,9 @@
     position: relative;
 
     &--open {
-      border-color: $c-topaz;
-      box-shadow: 0 0 4px $c-lightGreyBlue;
+      border-color: transparent;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
 
     &__selected-option {
@@ -34,16 +35,15 @@
 
     &__option-list {
       border: 1px solid $c-topaz;
-      border-bottom-left-radius: $borderRadius;
-      border-bottom-right-radius: $borderRadius;
-      border-top: none;
+      border-radius: $borderRadius;
+      box-shadow: 0 0 4px $c-lightGreyBlue;
       list-style: none;
       left: -1px;
       margin: 0;
       padding: 0;
       position: absolute;
       right: -1px;
-      top: 100%;
+      top: -1px;
       z-index: 1;
     }
 
