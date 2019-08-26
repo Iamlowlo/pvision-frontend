@@ -5,15 +5,10 @@
     @include font-body-highlight();
     appearance: none;
     background-color: $c-white;
+    border-radius: $borderRadius;
     color: $c-cobalt;
     border-color: $c-cobalt;
     padding: px2rem(7) px2rem(32) px2rem(9) px2rem(16);
-
-    option {
-      &:first-child {
-        display: none;
-      }
-    }
   }
 
   &__desktop {
@@ -21,11 +16,13 @@
     border: 1px solid $c-cobalt;
     border-radius: $borderRadius;
     cursor: pointer;
+    min-width: px2rem(150);
     position: relative;
 
     &--open {
-      border-color: $c-topaz;
-      box-shadow: 0 0 4px $c-lightGreyBlue;
+      border-color: transparent;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
 
     &__selected-option {
@@ -36,18 +33,24 @@
       position: relative;
     }
 
-    &__option-list {
+    &__option-container {
       border: 1px solid $c-topaz;
-      border-bottom-left-radius: $borderRadius;
-      border-bottom-right-radius: $borderRadius;
-      border-top: none;
-      list-style: none;
+      border-radius: $borderRadius;
+      box-sizing: content-box;
+      box-shadow: 0 0 4px $c-lightGreyBlue;
+      height: 0;
       left: -1px;
-      margin: 0;
-      padding: 0;
+      overflow: hidden;
       position: absolute;
       right: -1px;
-      top: 100%;
+      top: -1px;
+      z-index: 1;
+    }
+
+    &__option-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
     }
 
     &__option {
@@ -71,9 +74,10 @@
     position: absolute;
     right: px2rem(8);
     top: px2rem(9);
+    transition: transform 0.2s;
 
     &--open {
-      transform: rotateX(180deg);
+      transform: rotateZ(-180deg);
     }
   }
 }

@@ -6,19 +6,26 @@
       :class="[isOpen ? 'dropdown__desktop--open' : '']"
       @click.stop="toggleDropdown"
     >
-      <span class="dropdown__desktop__selected-option">{{
+      <span class="dropdown__desktop__selected-option" ref="dropdown__desktop__selected-option">{{
         selectedOption.msg
       }}</span>
-      <ul v-if="isOpen" class="dropdown__desktop__option-list">
-        <li
-          class="dropdown__desktop__option"
-          v-for="(option, key) of options"
-          :key="`dropdown-option-${key}`"
-          @click="() => onSelectOption(option.value)"
-        >
-          {{ option.msg }}
-        </li>
-      </ul>
+      <transition name="slideDown" @enter="transitionEnter" @leave="transitionLeave">
+        <div
+          v-if="isOpen"
+          ref="dropdown__desktop__option-container"
+          class="dropdown__desktop__option-container">
+          <ul class="dropdown__desktop__option-list">
+            <li
+              class="dropdown__desktop__option"
+              v-for="(option, key) of options"
+              :key="`dropdown-option-${key}-${option.value}`"
+              @click="() => onSelectOption(option.value)"
+            >
+              {{ option.msg }}
+            </li>
+          </ul>
+        </div>
+      </transition>
     </div>
     <select
       v-else
@@ -27,26 +34,30 @@
       :value="selectedOption.value"
       @change="$event => onSelectOption($event.target.value)"
     >
-      <option value="" disabled selected>{{ defaultMsg }}</option>
       <option
         v-for="(option, key) of options"
         :value="option.value"
         :key="`dropdown-option-${key}`"
-        >{{ option.msg }}</option
-      >
+        :selected="key === 0"
+      >{{ option.msg }}</option>
     </select>
-    <i class="icon-chevron-down dropdown__arrow"
-       :class="[isOpen && isDesktop ? 'dropdown__arrow--open' : '']"
-       @click.stop="toggleDropdown"></i>
+    <i
+      class="icon-chevron-down dropdown__arrow"
+      :class="[isOpen && isDesktop ? 'dropdown__arrow--open' : '']"
+      @click.stop="toggleDropdown"
+    ></i>
   </div>
 </template>
 
 <script>
+import { transitionEnter, transitionLeave } from "@/animations/slideDown";
+
 export default {
   name: 'Dropdown',
   data: () => ({
     selectedOption: {},
-    isOpen: false
+    isOpen: false,
+    isMounted: false
   }),
   props: {
     isDesktop: {
@@ -55,18 +66,16 @@ export default {
     },
     defaultMsg: {
       type: String,
-      default: 'Transaction Type'
+      default: ''
     },
     options: {
       type: Array,
-      default: () => [
-        { msg: 'Payment', value: 'payment' },
-        { msg: 'Credit', value: 'credit' },
-        { msg: 'Authorize', value: 'authorize' }
-      ]
+      default: () => []
     }
   },
   methods: {
+    transitionEnter,
+    transitionLeave,
     onSelectOption: function(optionValue) {
       this.selectedOption = this.options.find(
         option => option.value === optionValue
@@ -75,13 +84,17 @@ export default {
     },
     clickAway: function() {
       this.isOpen = false;
-      window.removeEventListener('click', this.clickAway)
+      window.removeEventListener('click', this.clickAway);
     },
     toggleDropdown: function() {
-      document.body.click();
       this.isOpen = !this.isOpen;
+      document.body.click();
       if (this.isOpen) {
-        window.addEventListener('click', this.clickAway)
+        window.addEventListener('click', this.clickAway);
+        this.$nextTick(function() {
+          const optionContainer = this.$refs['dropdown__desktop__option-container'];
+          optionContainer.style.paddingTop = `${this.$refs['dropdown__desktop__selected-option'].offsetHeight}px`;
+        })
       }
     }
   },
@@ -89,6 +102,7 @@ export default {
     this.selectedOption = this.defaultMsg
       ? { msg: this.defaultMsg }
       : this.options[0];
+    this.isMounted = true;
   }
 };
 </script>

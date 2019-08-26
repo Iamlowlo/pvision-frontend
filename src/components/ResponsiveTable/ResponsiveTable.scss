@@ -1,0 +1,132 @@
+.responsive-table {
+  $responsivetable: &;
+
+  background-color: $c-white;
+  margin: 0;
+  overflow-x: auto;
+  padding-left: px2rem(150);
+  width: 100%;
+  display: flex;
+
+  &__container {
+    position: relative;
+  }
+
+  &__row {
+    flex-shrink: 0;
+    padding: 0 px2rem(16);
+    width: px2rem(150);
+
+    &:not(:first-child) {
+      border-left: 1px solid $c-paleGrey-2;
+      cursor: pointer;
+    }
+
+    &--head {
+      background-color: $c-white;
+      border-right: 1px solid $c-paleGrey-2;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: px2rem(150);
+    }
+
+    &--open {
+      background-color: $c-paleGrey;
+    }
+  }
+
+  &__cell {
+    @include font-body();
+    display: block;
+    padding: px2rem(20) 0;
+
+    &--head {
+      @include font-body-highlight();
+      color: $c-cobalt;
+    }
+  }
+
+  &__extra {
+    background-color: $c-paleGrey;
+    display: flex;
+
+    &__row {
+      border-left: 1px solid $c-paleGrey-2;
+      display: flex;
+      flex-wrap: wrap;
+      height: 100%;
+      margin: 0;
+      padding: px2rem(16);
+      min-width: px2rem(400);
+    }
+
+    &__term {
+      @include font-title();
+      color: $c-cobalt;
+      padding-right: px2rem(8);
+      width: 20%;
+    }
+
+    &__definition {
+      @include font-title();
+      margin: 0;
+      width: 80%;
+    }
+  }
+
+  @media (min-width: px2rem($bp-desktop + 1)) {
+    display: table;
+    position: relative;
+    padding: 0;
+
+    &__row {
+      padding: 0;
+
+      &--head {
+        position: static;
+        border-right: none;
+      }
+
+      &:not(:first-child) {
+        border-left: none;
+
+        &:after {
+          background-color: $c-paleGrey-2;
+          content: '';
+          display: block;
+          height: 1px;
+          left:px2rem(16);
+          position: absolute;
+          right:px2rem(16);
+        }
+      }
+    }
+
+    &__cell {
+      display: table-cell;
+      padding-left: px2rem(16);
+      padding-right: px2rem(16);
+    }
+
+    &__extra {
+      display: table-row;
+
+      &__row {
+        border-left: none;
+        border-top: 1px solid $c-paleGrey-2;
+        display: grid;
+        grid-template: 1fr / 15% 35% 15% 35%;
+        margin: 0 px2rem(16);
+        padding-left: px2rem(64);
+        padding-right: px2rem(64);
+      }
+
+      &__term,
+      &__definition {
+        padding: px2rem(16) px2rem(4);
+        width: 100%;
+      }
+    }
+  }
+}

@@ -3,7 +3,11 @@ import mutations from './mutations';
 
 export const initialState = () => ({
   list: [],
-  filters: {}
+  config: {
+    brandNames: {}
+  },
+  filters: {},
+  availableFilters: {}
 });
 
 export default {

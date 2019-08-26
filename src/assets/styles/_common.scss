@@ -3,3 +3,11 @@
   max-width: px2rem(1200);
   padding: 0 px2rem(16);
 }
+
+.icon-spinner8 {
+  display: inline-block;
+  &:before {
+    display: inline-block;
+    animation: spinner 1s infinite linear;
+  }
+}
