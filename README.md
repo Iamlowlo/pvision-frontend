@@ -1,6 +1,6 @@
 # Recruitment Challenges: Frontend Software Engineer
 
-To complete the challenge it was needed to create a middleware node server with Express to work in dev mode. That means that build package will be calling to server directly from browser and if it's not deployed below same origin, a CORS failure will be shown and tha app won't be able torun properly.
+To complete the challenge it was needed to create a middleware node server with Express to work in dev mode. That means that build package will be calling to server directly from browser and if it's not deployed below same origin, a CORS failure will be shown and tha app won't be able to run properly.
 
 We can run frontend and middleware separately in two instances or just call `npm run dev` which calls them at the same time. Just remember that it's required to kill both processes instead of one.
 
@@ -8,6 +8,7 @@ We can run frontend and middleware separately in two instances or just call `npm
 - Vue
 - Sass
 - Vuex
+- Vue-i18n
 - Express
 
 ## Development info 
