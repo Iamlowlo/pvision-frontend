@@ -14,14 +14,14 @@ We can run frontend and middleware separately in two instances or just call `npm
 #### Components
 Business logic free vue components which can be use in other context.
 
-#####Dropdown
+##### Dropdown
 To offer device built in behaviour on mobile and tablet, this component renders a `<select>` on resolutions below 1024px.
 
 Over that limit, a fake select built in with a `<ul>` is shown to users on desktop alike devices where no OS ui is affected and the requested look and feel can be achieved.
 
 Beside that, a clickAway method is defined to close opened instance of the component if any part of the window recieves a click event. This eventListener is attached to window as soon as the open action occurs, and removed when clickAway is triggered back.
 
-#####Responsive Table
+##### Responsive Table
 According to the requested design, the project has a table that has to be done using the HTML tags for that purpose (`<table>`, `<tr>` & `<td>`).
 
 As no mobile design was supplied and the info on a table like that can't be properly displayed on smaller devices, resolutions below 1024px will show a header-fixed horizontal tabbed table.
@@ -31,14 +31,14 @@ To achieve that, `<table>` element display property was set to `flex`, `<td>` to
 #### Containers
 Vue components with business logic, having access to see and modify the app store using Vuex.
 
-#####Locale Selector
+##### Locale Selector
 A simple component, but as its purpose is to change locale wherever it is instanced, and it has a connection to store to do it so, it's a container and not a plain component by definition.
 
 It has defined as a data which locales should show. It could be retrieved from a service, but as this complete behaviour was not requested on the challenge and it will produce more code already explored, I decided to keep it simple for the challenge and keep it this way.
 
 Active locale is received as a computed property from global module, and each locale shown triggers a mutation on that module to set it.
 
-#####Transactions
+##### Transactions
 This component is a route holder and has multiple connections with store. Gather all components required to complete the view and performs data mapping to match input contract to `ResponsiveTable` component.
 
 This logic is set here instead of inside component or having it already prepared on store because, the first option binds business logic with an agnostic component and the second one ties this representation with the raw data recovered from service and further developments could be suffered because of that.
