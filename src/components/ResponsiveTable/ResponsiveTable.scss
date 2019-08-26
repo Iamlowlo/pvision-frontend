@@ -4,23 +4,31 @@
   background-color: $c-white;
   margin: 0;
   overflow-x: auto;
-  padding: 0 px2rem(12);
+  padding-left: px2rem(150);
   width: 100%;
+  display: flex;
+
+  &__container {
+    position: relative;
+  }
 
   &__row {
-    cursor: pointer;
     flex-shrink: 0;
-    padding-right: px2rem(16);
+    padding: 0 px2rem(16);
     width: px2rem(150);
 
     &:not(:first-child) {
       border-left: 1px solid $c-paleGrey-2;
-      padding-left: px2rem(16);
+      cursor: pointer;
     }
 
     &--head {
-      width: 20%;
-      max-width: px2rem(150);
+      background-color: $c-white;
+      border-right: 1px solid $c-paleGrey-2;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: px2rem(150);
     }
 
     &--open {
@@ -30,6 +38,7 @@
 
   &__cell {
     @include font-body();
+    display: block;
     padding: px2rem(20) 0;
 
     &--head {
@@ -40,11 +49,13 @@
 
   &__extra {
     background-color: $c-paleGrey;
+    display: flex;
 
     &__row {
       border-left: 1px solid $c-paleGrey-2;
       display: flex;
       flex-wrap: wrap;
+      height: 100%;
       margin: 0;
       padding: px2rem(16);
       min-width: px2rem(400);
@@ -64,29 +75,18 @@
     }
   }
 
-  @media (max-width: px2rem($bp-desktop)) {
-    display: flex;
-
-    &__cell {
-      display: block;
-    }
-
-    &__extra {
-      display: flex;
-      &__row {
-        display: flex;
-        flex-wrap: wrap;
-        height: 100%;
-      }
-    }
-  }
-
   @media (min-width: px2rem($bp-desktop + 1)) {
+    display: table;
     position: relative;
     padding: 0;
 
     &__row {
       padding: 0;
+
+      &--head {
+        position: static;
+        border-right: none;
+      }
 
       &:not(:first-child) {
         border-left: none;
@@ -104,11 +104,14 @@
     }
 
     &__cell {
+      display: table-cell;
       padding-left: px2rem(16);
       padding-right: px2rem(16);
     }
 
     &__extra {
+      display: table-row;
+
       &__row {
         border-left: none;
         border-top: 1px solid $c-paleGrey-2;
